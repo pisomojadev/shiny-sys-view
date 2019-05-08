@@ -24,3 +24,14 @@ centralEntities <- nickOAuth::callSecureEndpoint("GET", entEndpoint) %>%
         format = "%Y-%m-%d%h:%M:%OSZ",
         tx = "America/Chicago"
     ))
+
+
+# call entity metadata api
+metaEntities <- nickOAuth::callSecureEndpoint("GET", metaEndpoint) %>%
+    content(type = "application/json", as = "text", encoding = "UTF-8") %>% 
+    fromJSON %>% tbl_df %>% 
+    mutate(logged_on = as.POSIXct(
+        logged_on, 
+        format = "%Y-%m-%d%h:%M:%OSZ",
+        tx = "America/Chicago"
+    ))
